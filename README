@@ -1,0 +1,29 @@
+This cake plugin begun with a crazy requirement: To be able to delete remotely parts of the cake cache.
+
+It was needed this way beacuse we had a mian app that was beign slowly replaced with another one writen in cake. I the meanwhile it
+war required to coexists both applications in order to do the transition. When It was time to do some cache, we faced the problem of invalidation,
+wich was double harder to figure out since we had to apps modifiying the same info. We needed somehow to comunicate the old app with the new one, so this simple plugin was born.
+
+This plugin is a simple http wrapper around the cake Cache class. Currently it only exposes the HTTP DELETE method for trashing a single cache key, or all the keys used by a cache configuration. In order to make it work as a REST service put dis in your app/config/routes.php file
+
+Router::connect(                                                           
+         '/cache/:config/:key',                                    
+         array(                                                             
+                 'plugin' => 'cache',                                       
+                 'controller' => 'cache',                                   
+                 'action' => 'delete',                                      
+                 '[method]' => 'DELETE',                                    
+                 'key' => null                                              
+         ),                                                                 
+         array('config' => '[a-z]+', 'key' => '[a-zA-Z\.\_\-]*')
+);                                                                                              
+                                                                                                 
+And this plugin inside your plugins folder. You would be able then to delete the cache using HTTP request like this one
+
+DELETE http://example.com/cache/custom_config/my_key
+
+or
+
+DELETE http://example.com/cache/custom_config
+
+To delete all the keys from custom_config (In the case your Cache engine supports namespacing)
