@@ -14,7 +14,7 @@ Router::connect(
                  '[method]' => 'DELETE',                                    
                  'key' => null                                              
          ),                                                                 
-         array('config' => '[a-zA-z\_\-]+', 'key' => '[a-zA-Z\.\_\-]*')
+         array('config' => '[a-zA-Z\_\-]+', 'key' => '[a-zA-Z\.\_\-]*')
 );                                                                                              
                                                                                                  
 And this plugin inside your plugins folder. You would be able then to delete the cache using HTTP request like this one
