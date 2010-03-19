@@ -32,12 +32,12 @@ class CacheShell extends Shell {
 	function delete() {
 		if (empty($this->args) || count($this->args) > 2) {
 			$this->help();
-			$this->_stop();
+			return $this->_stop();
 		}
 		$configured = Cache::configured();
 		if (!in_array($this->args[0], $configured)) {
 			$this->err(sprintf(__d('cache', 'Configuration "%s" not found.', true), $this->args[0]));
-			$this->_stop();
+			return $this->_stop();
 		}
 		if (isset($this->args[1])) {
 			Cache::delete($this->args[1], $this->args[0]);
